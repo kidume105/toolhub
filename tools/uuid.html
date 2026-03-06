@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="sw">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>UUID Generator</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <main class="card">
+    <div class="topbar">
+      <a class="link" href="../index.html">← Home</a>
+      <span class="small">UUID Generator</span>
+    </div>
+
+    <p class="sub">Tengeneza UUID v4 (dev friendly).</p>
+
+    <label class="label">How many?</label>
+    <input id="n" type="number" min="1" max="50" value="5" />
+
+    <div class="buttons">
+      <button id="gen">Generate</button>
+      <button id="copy" class="secondary" disabled>Copy all</button>
+      <button id="clr" class="ghost">Clear</button>
+    </div>
+
+    <div class="panel">
+      <textarea id="out" rows="10" readonly></textarea>
+      <p id="msg" class="hint"></p>
+    </div>
+
+    <script>
+      const n=document.getElementById("n");
+      const out=document.getElementById("out");
+      const msg=document.getElementById("msg");
+      const gen=document.getElementById("gen");
+      const copy=document.getElementById("copy");
+      const clr=document.getElementById("clr");
+
+      function uuidv4(){
+        if(crypto?.randomUUID) return crypto.randomUUID();
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c=>{
+          const r=Math.random()*16|0, v=c==='x'?r:(r&0x3|0x8);
+          return v.toString(16);
+        });
+      }
+
+      gen.addEventListener("click", ()=>{
+        const k=Math.max(1, Math.min(50, parseInt(n.value||"5",10)));
+        const arr=[];
+        for(let i=0;i<k;i++) arr.push(uuidv4());
+        out.value=arr.join("\\n");
+        copy.disabled = arr.length===0;
+        msg.textContent="✅ Done.";
+      });
+
+      copy.addEventListener("click", async ()=>{
+        try{ await navigator.clipboard.writeText(out.value); msg.textContent="✅ Copied!"; }
+        catch{ msg.textContent="⚠️ Copy failed."; }
+      });
+
+      clr.addEventListener("click", ()=>{ out.value=""; msg.textContent=""; copy.disabled=true; });
+    </script>
+  </main>
+</body>
+</html>

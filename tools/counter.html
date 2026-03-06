@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="sw">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Word & Character Counter</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <main class="card">
+    <div class="topbar">
+      <a class="link" href="../index.html">← Home</a>
+      <span class="small">Word & Character Counter</span>
+    </div>
+
+    <p class="sub">Bandika text yako, utaona words + characters instantly.</p>
+
+    <label class="label">Text</label>
+    <textarea id="t" rows="8" placeholder="Bandika hapa..."></textarea>
+
+    <div class="row">
+      <div class="panel">
+        <div class="muted small">Words</div>
+        <div id="words" style="font-size:1.8rem;font-weight:800">0</div>
+      </div>
+      <div class="panel">
+        <div class="muted small">Characters</div>
+        <div id="chars" style="font-size:1.8rem;font-weight:800">0</div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button id="clr" class="ghost">Clear</button>
+    </div>
+
+    <script>
+      const t=document.getElementById("t");
+      const w=document.getElementById("words");
+      const c=document.getElementById("chars");
+      const clr=document.getElementById("clr");
+
+      function count(){
+        const s=t.value || "";
+        c.textContent = s.length;
+        const words = s.trim() ? s.trim().split(/\s+/).length : 0;
+        w.textContent = words;
+      }
+      t.addEventListener("input", count);
+      clr.addEventListener("click", ()=>{ t.value=""; count(); });
+      count();
+    </script>
+  </main>
+</body>
+</html>

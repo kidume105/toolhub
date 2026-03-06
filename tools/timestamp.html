@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="sw">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Timestamp Converter</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <main class="card">
+    <div class="topbar">
+      <a class="link" href="../index.html">← Home</a>
+      <span class="small">Timestamp Converter</span>
+    </div>
+
+    <p class="sub">Unix seconds ↔ Date (local time).</p>
+
+    <div class="row">
+      <div class="panel">
+        <div class="label">Unix Timestamp (seconds)</div>
+        <input id="unix" placeholder="Mfano: 1710000000" />
+        <div class="buttons">
+          <button id="toDate">To Date</button>
+          <button id="nowUnix" class="secondary">Now</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="label">Date/Time</div>
+        <input id="date" placeholder="YYYY-MM-DD HH:mm:ss" />
+        <div class="buttons">
+          <button id="toUnix">To Unix</button>
+          <button id="nowDate" class="secondary">Now</button>
+        </div>
+      </div>
+    </div>
+
+    <p id="msg" class="hint"></p>
+
+    <script>
+      const unix=document.getElementById("unix");
+      const date=document.getElementById("date");
+      const msg=document.getElementById("msg");
+
+      function pad(n){ return String(n).padStart(2,"0"); }
+      function format(d){
+        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+      }
+
+      document.getElementById("toDate").addEventListener("click", ()=>{
+        const s=parseInt((unix.value||"").trim(),10);
+        if(Number.isNaN(s)){ msg.textContent="⚠️ Weka unix seconds sahihi."; return; }
+        const d=new Date(s*1000);
+        date.value=format(d);
+        msg.textContent="✅ Done.";
+      });
+
+      document.getElementById("toUnix").addEventListener("click", ()=>{
+        const raw=(date.value||"").trim();
+        const iso=raw.replace(" ","T");
+        const d=new Date(iso);
+        if(isNaN(d.getTime())){ msg.textContent="⚠️ Weka date format sahihi."; return; }
+        unix.value = Math.floor(d.getTime()/1000);
+        msg.textContent="✅ Done.";
+      });
+
+      function setNow(){
+        const d=new Date();
+        date.value=format(d);
+        unix.value=Math.floor(d.getTime()/1000);
+      }
+      document.getElementById("nowUnix").addEventListener("click", ()=>{ setNow(); msg.textContent="✅ Now."; });
+      document.getElementById("nowDate").addEventListener("click", ()=>{ setNow(); msg.textContent="✅ Now."; });
+      setNow();
+    </script>
+  </main>
+</body>
+</html>

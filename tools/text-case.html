@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="sw">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Text Case Converter</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <main class="card">
+    <div class="topbar">
+      <a class="link" href="../index.html">← Home</a>
+      <span class="small">Text Case Converter</span>
+    </div>
+
+    <p class="sub">Uppercase, lowercase, Capitalize, Title Case.</p>
+
+    <label class="label">Input</label>
+    <textarea id="in" rows="7" placeholder="Andika/bandika text..."></textarea>
+
+    <div class="buttons">
+      <button data-act="upper">UPPERCASE</button>
+      <button data-act="lower" class="secondary">lowercase</button>
+      <button data-act="cap" class="secondary">Capitalize</button>
+      <button data-act="title" class="secondary">Title Case</button>
+      <button id="copy" class="ghost">Copy output</button>
+      <button id="clr" class="ghost">Clear</button>
+    </div>
+
+    <div class="panel">
+      <div class="label">Output</div>
+      <textarea id="out" rows="7" readonly></textarea>
+      <p id="msg" class="hint"></p>
+    </div>
+
+    <script>
+      const input=document.getElementById("in");
+      const out=document.getElementById("out");
+      const msg=document.getElementById("msg");
+      const copy=document.getElementById("copy");
+      const clr=document.getElementById("clr");
+
+      function capitalizeSentence(s){
+        return s.replace(/\\b([a-z])/g, m => m.toUpperCase());
+      }
+      function titleCase(s){
+        return s.toLowerCase().replace(/\\b\\w+/g, w => w[0].toUpperCase()+w.slice(1));
+      }
+
+      document.addEventListener("click",(e)=>{
+        const act=e.target?.dataset?.act;
+        if(!act) return;
+        const s=input.value || "";
+        if(act==="upper") out.value=s.toUpperCase();
+        if(act==="lower") out.value=s.toLowerCase();
+        if(act==="cap") out.value=capitalizeSentence(s.toLowerCase());
+        if(act==="title") out.value=titleCase(s);
+      });
+
+      copy.addEventListener("click", async ()=>{
+        try{ await navigator.clipboard.writeText(out.value); msg.textContent="✅ Copied!"; }
+        catch{ msg.textContent="⚠️ Copy failed."; }
+      });
+
+      clr.addEventListener("click", ()=>{ input.value=""; out.value=""; msg.textContent=""; });
+    </script>
+  </main>
+</body>
+</html>
