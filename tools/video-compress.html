@@ -1,0 +1,49 @@
+<!doctype html><html lang="sw"><head>
+  <meta charset="utf-8"/>
+  <title>Video Compressor — QuickTools</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="description" content="Compress MP4/WEBM kwenye browser na options za quality, width, fps, na audio."/>
+  <meta name="theme-color" content="#08111f"/>
+  <link rel="canonical" href="/tools/video-compress.html"/>
+  <meta property="og:title" content="Video Compressor — QuickTools"/>
+  <meta property="og:description" content="Compress MP4/WEBM kwenye browser na options za quality, width, fps, na audio."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="/tools/video-compress.html"/>
+  <meta name="twitter:card" content="summary"/>
+  <meta name="robots" content="index,follow"/>
+<link rel="stylesheet" href="/assets/app.css"/></head><body>
+<div class="container"><div id="navMount"></div>
+<section class="page">
+<div class="breadcrumb"><a href="/index.html">Tools</a> / <span>Video Compressor</span></div>
+<h1 style="margin:10px 0 6px">Video Compressor</h1>
+<p class="sub">Compress MP4/WEBM kwenye browser na options za quality, width, fps, na audio.</p>
+<div class="panel"><p class="note"><b>Note:</b> Hii tool inatumia FFmpeg WebAssembly ndani ya browser. Mara ya kwanza inaweza kuchelewa ku-load. Kwa devices zenye RAM ndogo, tumia files ndogo au settings za low quality.</p></div><label class="label">Choose video</label><input id="file" type="file" accept="video/*"/>
+<div class="row2"><div><label class="label">Output format</label><select id="format"><option value="mp4" selected>MP4</option><option value="webm">WEBM</option></select></div>
+<div><label class="label">Preset</label><select id="preset"><option>ultrafast</option><option selected>veryfast</option><option>fast</option><option>medium</option></select></div></div>
+<div class="row2"><div><label class="label">Quality (CRF)</label><input id="crf" type="number" min="18" max="35" value="28"/><p class="small">23–30 ni range ya kawaida.</p></div>
+<div><label class="label">Max width</label><input id="width" type="number" min="320" max="1920" value="1280"/></div></div>
+<div class="row2"><div><label class="label">Audio</label><select id="audio"><option value="keep" selected>Keep audio</option><option value="aac96">AAC 96 kbps</option><option value="aac128">AAC 128 kbps</option><option value="mute">Remove audio</option></select></div>
+<div><label class="label">Target FPS</label><select id="fps"><option value="keep" selected>Keep</option><option value="30">30 fps</option><option value="25">25 fps</option><option value="20">20 fps</option></select></div></div>
+<div class="btns"><button id="load">Load engine</button><button id="run" class="secondary" disabled>Compress</button><button id="download" class="ghost" disabled>Download</button></div>
+<div class="panel"><div class="progress"><div id="bar"></div></div><p id="status" class="note" style="margin-top:10px">Ready.</p><p id="sizes" class="small"></p></div>
+<video id="preview" class="media-preview" controls></video>
+</section><div id="footerMount"></div></div>
+<div id="toast" class="toast"></div>
+<script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script><script>
+const { createFFmpeg, fetchFile } = FFmpeg;
+const ffmpeg = createFFmpeg({ log:true, corePath:'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js' });
+let loaded=false, outBlob=null;
+const file=document.getElementById('file'), loadBtn=document.getElementById('load'), runBtn=document.getElementById('run'), dlBtn=document.getElementById('download'), status=document.getElementById('status'), bar=document.getElementById('bar'), sizes=document.getElementById('sizes'), preview=document.getElementById('preview');
+const format=document.getElementById('format'), preset=document.getElementById('preset'), crf=document.getElementById('crf'), width=document.getElementById('width'), audio=document.getElementById('audio'), fps=document.getElementById('fps');
+const bytes=n=>n<1024?n+' B':n<1048576?(n/1024).toFixed(1)+' KB':(n/1048576).toFixed(2)+' MB';
+const setP=r=>bar.style.width=Math.round(Math.max(0,Math.min(1,r))*100)+'%';
+loadBtn.onclick=async()=>{if(loaded) return toast('✅ Engine loaded'); status.textContent='Loading engine...'; setP(.12); ffmpeg.setProgress(({ratio})=>setP(ratio)); try{await ffmpeg.load(); loaded=true; setP(1); status.textContent='✅ Engine loaded'; runBtn.disabled=!file.files?.[0];}catch(e){status.textContent='⚠️ Load failed'; setP(0);}};
+file.onchange=()=>{runBtn.disabled=!(loaded&&file.files?.[0]); dlBtn.disabled=true; preview.style.display='none'; outBlob=null; sizes.textContent=file.files?.[0]?`Original: ${bytes(file.files[0].size)}`:'';};
+runBtn.onclick=async()=>{const f=file.files?.[0]; if(!f) return; status.textContent='Processing...'; outBlob=null; dlBtn.disabled=true; preview.style.display='none'; setP(0); const inExt=(f.name.split('.').pop()||'mp4').toLowerCase(); const input='input.'+inExt, output='output.'+format.value; ffmpeg.FS('writeFile',input,await fetchFile(f)); let vf=[`scale='min(${Math.max(320,Math.min(1920,+width.value||1280))},iw)':-2`]; if(fps.value!=='keep') vf.push(`fps=${fps.value}`); const args=['-i',input,'-vf',vf.join(',')];
+if(format.value==='mp4'){ args.push('-c:v','libx264','-preset',preset.value,'-crf',String(Math.max(18,Math.min(35,+crf.value||28)))); if(audio.value==='mute') args.push('-an'); else if(audio.value==='aac96') args.push('-c:a','aac','-b:a','96k'); else args.push('-c:a','aac','-b:a','128k'); args.push('-movflags','+faststart',output);}
+else { args.push('-c:v','libvpx','-b:v','0','-crf',String(Math.max(18,Math.min(35,+crf.value||28)))); if(audio.value==='mute') args.push('-an'); else args.push('-c:a','libvorbis','-q:a','3'); args.push(output);}
+try{ await ffmpeg.run(...args); const data=ffmpeg.FS('readFile',output); outBlob=new Blob([data.buffer],{type:format.value==='mp4'?'video/mp4':'video/webm'}); sizes.textContent=`Original: ${bytes(f.size)} → Output: ${bytes(outBlob.size)}`; status.textContent='✅ Done'; dlBtn.disabled=false; preview.src=URL.createObjectURL(outBlob); preview.style.display='block'; try{ffmpeg.FS('unlink',input); ffmpeg.FS('unlink',output);}catch(e){} }catch(e){status.textContent='⚠️ Processing failed. Jaribu file ndogo au settings low.';} finally{setP(1);}
+};
+dlBtn.onclick=()=>{if(!outBlob) return; const a=document.createElement('a'); a.href=URL.createObjectURL(outBlob); a.download='compressed.'+format.value; a.click();};
+</script>
+</body></html>

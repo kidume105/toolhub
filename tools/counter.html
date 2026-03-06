@@ -1,54 +1,30 @@
-<!doctype html>
-<html lang="sw">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Word & Character Counter</title>
-  <link rel="stylesheet" href="../styles.css" />
-</head>
-<body>
-  <main class="card">
-    <div class="topbar">
-      <a class="link" href="../index.html">← Home</a>
-      <span class="small">Word & Character Counter</span>
-    </div>
-
-    <p class="sub">Bandika text yako, utaona words + characters instantly.</p>
-
-    <label class="label">Text</label>
-    <textarea id="t" rows="8" placeholder="Bandika hapa..."></textarea>
-
-    <div class="row">
-      <div class="panel">
-        <div class="muted small">Words</div>
-        <div id="words" style="font-size:1.8rem;font-weight:800">0</div>
-      </div>
-      <div class="panel">
-        <div class="muted small">Characters</div>
-        <div id="chars" style="font-size:1.8rem;font-weight:800">0</div>
-      </div>
-    </div>
-
-    <div class="buttons">
-      <button id="clr" class="ghost">Clear</button>
-    </div>
-
-    <script>
-      const t=document.getElementById("t");
-      const w=document.getElementById("words");
-      const c=document.getElementById("chars");
-      const clr=document.getElementById("clr");
-
-      function count(){
-        const s=t.value || "";
-        c.textContent = s.length;
-        const words = s.trim() ? s.trim().split(/\s+/).length : 0;
-        w.textContent = words;
-      }
-      t.addEventListener("input", count);
-      clr.addEventListener("click", ()=>{ t.value=""; count(); });
-      count();
-    </script>
-  </main>
-</body>
-</html>
+<!doctype html><html lang="sw"><head>
+  <meta charset="utf-8"/>
+  <title>Word & Character Counter — QuickTools</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="description" content="Count words na characters instantly."/>
+  <meta name="theme-color" content="#08111f"/>
+  <link rel="canonical" href="/tools/counter.html"/>
+  <meta property="og:title" content="Word & Character Counter — QuickTools"/>
+  <meta property="og:description" content="Count words na characters instantly."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="/tools/counter.html"/>
+  <meta name="twitter:card" content="summary"/>
+  <meta name="robots" content="index,follow"/>
+<link rel="stylesheet" href="/assets/app.css"/></head><body>
+<div class="container"><div id="navMount"></div>
+<section class="page">
+<div class="breadcrumb"><a href="/index.html">Tools</a> / <span>Word & Character Counter</span></div>
+<h1 style="margin:10px 0 6px">Word & Character Counter</h1>
+<p class="sub">Count words na characters instantly.</p>
+<label class="label">Text</label><textarea id="t" rows="9" placeholder="Bandika hapa..."></textarea>
+<div class="row2" style="margin-top:12px"><div class="panel"><div class="small">Words</div><div id="words" style="font-size:1.8rem;font-weight:900">0</div></div><div class="panel"><div class="small">Characters</div><div id="chars" style="font-size:1.8rem;font-weight:900">0</div></div></div>
+<div class="btns"><button id="copy" class="secondary" disabled>Copy text</button><button id="clr" class="ghost">Clear</button></div>
+</section><div id="footerMount"></div></div>
+<div id="toast" class="toast"></div>
+<script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script>
+const t=document.getElementById('t'),w=document.getElementById('words'),c=document.getElementById('chars'),copy=document.getElementById('copy');
+function count(){const s=t.value||''; c.textContent=s.length; w.textContent=s.trim()?s.trim().split(/\s+/).length:0; copy.disabled=!s.trim();}
+t.addEventListener('input',count); document.getElementById('clr').onclick=()=>{t.value='';count();}; copy.onclick=()=>copyText(t.value); count();
+</script>
+</body></html>

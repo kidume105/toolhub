@@ -1,69 +1,32 @@
-<!doctype html>
-<html lang="sw">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Text Case Converter</title>
-  <link rel="stylesheet" href="../styles.css" />
-</head>
-<body>
-  <main class="card">
-    <div class="topbar">
-      <a class="link" href="../index.html">← Home</a>
-      <span class="small">Text Case Converter</span>
-    </div>
-
-    <p class="sub">Uppercase, lowercase, Capitalize, Title Case.</p>
-
-    <label class="label">Input</label>
-    <textarea id="in" rows="7" placeholder="Andika/bandika text..."></textarea>
-
-    <div class="buttons">
-      <button data-act="upper">UPPERCASE</button>
-      <button data-act="lower" class="secondary">lowercase</button>
-      <button data-act="cap" class="secondary">Capitalize</button>
-      <button data-act="title" class="secondary">Title Case</button>
-      <button id="copy" class="ghost">Copy output</button>
-      <button id="clr" class="ghost">Clear</button>
-    </div>
-
-    <div class="panel">
-      <div class="label">Output</div>
-      <textarea id="out" rows="7" readonly></textarea>
-      <p id="msg" class="hint"></p>
-    </div>
-
-    <script>
-      const input=document.getElementById("in");
-      const out=document.getElementById("out");
-      const msg=document.getElementById("msg");
-      const copy=document.getElementById("copy");
-      const clr=document.getElementById("clr");
-
-      function capitalizeSentence(s){
-        return s.replace(/\\b([a-z])/g, m => m.toUpperCase());
-      }
-      function titleCase(s){
-        return s.toLowerCase().replace(/\\b\\w+/g, w => w[0].toUpperCase()+w.slice(1));
-      }
-
-      document.addEventListener("click",(e)=>{
-        const act=e.target?.dataset?.act;
-        if(!act) return;
-        const s=input.value || "";
-        if(act==="upper") out.value=s.toUpperCase();
-        if(act==="lower") out.value=s.toLowerCase();
-        if(act==="cap") out.value=capitalizeSentence(s.toLowerCase());
-        if(act==="title") out.value=titleCase(s);
-      });
-
-      copy.addEventListener("click", async ()=>{
-        try{ await navigator.clipboard.writeText(out.value); msg.textContent="✅ Copied!"; }
-        catch{ msg.textContent="⚠️ Copy failed."; }
-      });
-
-      clr.addEventListener("click", ()=>{ input.value=""; out.value=""; msg.textContent=""; });
-    </script>
-  </main>
-</body>
-</html>
+<!doctype html><html lang="sw"><head>
+  <meta charset="utf-8"/>
+  <title>Text Case Converter — QuickTools</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="description" content="Uppercase, lowercase, title case na capitalize."/>
+  <meta name="theme-color" content="#08111f"/>
+  <link rel="canonical" href="/tools/text-case.html"/>
+  <meta property="og:title" content="Text Case Converter — QuickTools"/>
+  <meta property="og:description" content="Uppercase, lowercase, title case na capitalize."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="/tools/text-case.html"/>
+  <meta name="twitter:card" content="summary"/>
+  <meta name="robots" content="index,follow"/>
+<link rel="stylesheet" href="/assets/app.css"/></head><body>
+<div class="container"><div id="navMount"></div>
+<section class="page">
+<div class="breadcrumb"><a href="/index.html">Tools</a> / <span>Text Case Converter</span></div>
+<h1 style="margin:10px 0 6px">Text Case Converter</h1>
+<p class="sub">Uppercase, lowercase, title case na capitalize.</p>
+<label class="label">Input</label><textarea id="in" rows="7" placeholder="Andika/bandika text..."></textarea>
+<div class="btns"><button data-act="upper">UPPERCASE</button><button data-act="lower" class="secondary">lowercase</button><button data-act="cap" class="secondary">Capitalize</button><button data-act="title" class="secondary">Title Case</button><button id="copy" class="ghost">Copy output</button><button id="clr" class="ghost">Clear</button></div>
+<div class="panel"><label class="label">Output</label><textarea id="out" rows="7" readonly></textarea></div>
+</section><div id="footerMount"></div></div>
+<div id="toast" class="toast"></div>
+<script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script>
+const i=document.getElementById('in'),o=document.getElementById('out');
+function cap(s){return s.replace(/\b([a-z])/g,m=>m.toUpperCase())}
+function titleCase(s){return s.toLowerCase().replace(/\b\w+/g,w=>w[0].toUpperCase()+w.slice(1))}
+document.addEventListener('click',e=>{const a=e.target?.dataset?.act; if(!a) return; const s=i.value||''; if(a==='upper')o.value=s.toUpperCase(); if(a==='lower')o.value=s.toLowerCase(); if(a==='cap')o.value=cap(s.toLowerCase()); if(a==='title')o.value=titleCase(s);});
+document.getElementById('copy').onclick=()=>copyText(o.value); document.getElementById('clr').onclick=()=>{i.value='';o.value='';};
+</script>
+</body></html>

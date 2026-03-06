@@ -1,86 +1,32 @@
-<!doctype html>
-<html lang="sw">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>YouTube Thumbnail Downloader</title>
-  <link rel="stylesheet" href="../styles.css" />
-</head>
-<body>
-  <main class="card">
-    <div class="topbar">
-      <a class="link" href="../index.html">← Home</a>
-      <span class="small">YouTube Thumbnail Downloader</span>
-    </div>
-
-    <p class="sub">Weka YouTube link, pata thumbnails (maxres, hq, mq...).</p>
-
-    <label class="label">YouTube URL</label>
-    <input id="url" placeholder="https://www.youtube.com/watch?v=VIDEO_ID" />
-
-    <div class="buttons">
-      <button id="go">Get thumbnails</button>
-      <button id="clr" class="ghost">Clear</button>
-    </div>
-
-    <p id="msg" class="hint"></p>
-
-    <div id="out" class="panel" style="display:none;">
-      <h2 style="margin-top:0;">Results</h2>
-      <table class="table" id="tbl">
-        <thead><tr><th>Type</th><th>Preview</th><th>Download</th></tr></thead>
-        <tbody></tbody>
-      </table>
-      <p class="small">Tip: maxresdefault inaweza kukosa kwa baadhi ya videos; tumia hqdefault.</p>
-    </div>
-
-    <script>
-      const url=document.getElementById("url");
-      const msg=document.getElementById("msg");
-      const out=document.getElementById("out");
-      const tbody=document.querySelector("#tbl tbody");
-
-      function extractId(u){
-        try{
-          const x=new URL(u);
-          if(x.hostname.includes("youtu.be")) return x.pathname.replace("/","");
-          if(x.searchParams.get("v")) return x.searchParams.get("v");
-          const m = x.pathname.match(/\\/shorts\\/([^\\/\\?]+)/);
-          if(m) return m[1];
-          return null;
-        }catch{
-          if(/^[a-zA-Z0-9_-]{6,}$/.test(u)) return u;
-          return null;
-        }
-      }
-
-      const types = [
-        ["maxresdefault", "Max (HD)"],
-        ["sddefault", "SD"],
-        ["hqdefault", "HQ"],
-        ["mqdefault", "MQ"],
-        ["default", "Default"]
-      ];
-
-      document.getElementById("go").addEventListener("click", ()=>{
-        const id=extractId((url.value||"").trim());
-        if(!id){ msg.textContent="⚠️ Weka YouTube link sahihi au video id."; out.style.display="none"; return; }
-        msg.textContent="✅ Done.";
-        tbody.innerHTML = types.map(([file,label])=>{
-          const img=`https://img.youtube.com/vi/${id}/${file}.jpg`;
-          return `<tr>
-            <td>${label}</td>
-            <td><img src="${img}" alt="${label}" style="max-width:220px;border-radius:10px;border:1px solid rgba(255,255,255,.12)"></td>
-            <td><a class="link" href="${img}" target="_blank" rel="noopener">Open/Download</a></td>
-          </tr>`;
-        }).join("");
-        out.style.display="block";
-      });
-
-      document.getElementById("clr").addEventListener("click", ()=>{
-        url.value=""; msg.textContent=""; out.style.display="none"; tbody.innerHTML="";
-      });
-    </script>
-  </main>
-</body>
-</html>
+<!doctype html><html lang="sw"><head>
+  <meta charset="utf-8"/>
+  <title>YouTube Thumbnail Downloader — QuickTools</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="description" content="Pata maxres/hq/mq thumbnails kwa YouTube link."/>
+  <meta name="theme-color" content="#08111f"/>
+  <link rel="canonical" href="/tools/yt-thumb.html"/>
+  <meta property="og:title" content="YouTube Thumbnail Downloader — QuickTools"/>
+  <meta property="og:description" content="Pata maxres/hq/mq thumbnails kwa YouTube link."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="/tools/yt-thumb.html"/>
+  <meta name="twitter:card" content="summary"/>
+  <meta name="robots" content="index,follow"/>
+<link rel="stylesheet" href="/assets/app.css"/></head><body>
+<div class="container"><div id="navMount"></div>
+<section class="page">
+<div class="breadcrumb"><a href="/index.html">Tools</a> / <span>YouTube Thumbnail Downloader</span></div>
+<h1 style="margin:10px 0 6px">YouTube Thumbnail Downloader</h1>
+<p class="sub">Pata maxres/hq/mq thumbnails kwa YouTube link.</p>
+<label class="label">YouTube URL</label><input id="url" placeholder="https://www.youtube.com/watch?v=VIDEO_ID"/>
+<div class="btns"><button id="go">Get thumbnails</button><button id="clr" class="ghost">Clear</button></div><p id="msg" class="note"></p>
+<div id="out" class="panel" style="display:none"><table class="table" id="tbl"><thead><tr><th>Type</th><th>Preview</th><th>Download</th></tr></thead><tbody></tbody></table></div>
+</section><div id="footerMount"></div></div>
+<div id="toast" class="toast"></div>
+<script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script>
+const u=document.getElementById('url'),m=document.getElementById('msg'),out=document.getElementById('out'),tb=document.querySelector('#tbl tbody');
+function extractId(v){try{const x=new URL(v); if(x.hostname.includes('youtu.be')) return x.pathname.replace('/',''); if(x.searchParams.get('v')) return x.searchParams.get('v'); const s=x.pathname.match(/\/shorts\/([^\/\?]+)/); if(s) return s[1]; return null;}catch(e){return /^[a-zA-Z0-9_-]{6,}$/.test(v)?v:null;}}
+const types=[['maxresdefault','Max (HD)'],['sddefault','SD'],['hqdefault','HQ'],['mqdefault','MQ'],['default','Default']];
+document.getElementById('go').onclick=()=>{const id=extractId((u.value||'').trim()); if(!id){m.textContent='⚠️ Invalid link'; out.style.display='none'; return;} tb.innerHTML=types.map(([f,l])=>{const img=`https://img.youtube.com/vi/${id}/${f}.jpg`; return `<tr><td>${l}</td><td><img src="${img}" style="max-width:220px;border-radius:12px;border:1px solid rgba(255,255,255,.12)"></td><td><a class="pill" href="${img}" target="_blank">Open</a></td></tr>`}).join(''); out.style.display='block'; m.textContent='✅ Done';};
+document.getElementById('clr').onclick=()=>{u.value='';m.textContent='';out.style.display='none';tb.innerHTML='';};
+</script>
+</body></html>
