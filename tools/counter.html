@@ -1,30 +1,14 @@
 <!doctype html><html lang="sw"><head>
   <meta charset="utf-8"/>
-  <title>Word & Character Counter — QuickTools</title>
+  <title>Word Counter — QuickTools</title>
+  <meta name="description" content="Count words, characters na copy text kwa haraka."/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="description" content="Count words na characters instantly."/>
-  <meta name="theme-color" content="#08111f"/>
+  <meta name="theme-color" content="#070b17"/>
   <link rel="canonical" href="/tools/counter.html"/>
-  <meta property="og:title" content="Word & Character Counter — QuickTools"/>
-  <meta property="og:description" content="Count words na characters instantly."/>
+  <meta property="og:title" content="Word Counter — QuickTools"/>
+  <meta property="og:description" content="Count words, characters na copy text kwa haraka."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="/tools/counter.html"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="robots" content="index,follow"/>
-<link rel="stylesheet" href="/assets/app.css"/></head><body>
-<div class="container"><div id="navMount"></div>
-<section class="page">
-<div class="breadcrumb"><a href="/index.html">Tools</a> / <span>Word & Character Counter</span></div>
-<h1 style="margin:10px 0 6px">Word & Character Counter</h1>
-<p class="sub">Count words na characters instantly.</p>
-<label class="label">Text</label><textarea id="t" rows="9" placeholder="Bandika hapa..."></textarea>
-<div class="row2" style="margin-top:12px"><div class="panel"><div class="small">Words</div><div id="words" style="font-size:1.8rem;font-weight:900">0</div></div><div class="panel"><div class="small">Characters</div><div id="chars" style="font-size:1.8rem;font-weight:900">0</div></div></div>
-<div class="btns"><button id="copy" class="secondary" disabled>Copy text</button><button id="clr" class="ghost">Clear</button></div>
-</section><div id="footerMount"></div></div>
-<div id="toast" class="toast"></div>
-<script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script>
-const t=document.getElementById('t'),w=document.getElementById('words'),c=document.getElementById('chars'),copy=document.getElementById('copy');
-function count(){const s=t.value||''; c.textContent=s.length; w.textContent=s.trim()?s.trim().split(/\s+/).length:0; copy.disabled=!s.trim();}
-t.addEventListener('input',count); document.getElementById('clr').onclick=()=>{t.value='';count();}; copy.onclick=()=>copyText(t.value); count();
-</script>
-</body></html>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='14' width='64' height='64' fill='%236d8dff'/%3E%3Ctext x='50%25' y='54%25' font-size='34' text-anchor='middle' dominant-baseline='middle' fill='white'%3E⚡%3C/text%3E%3C/svg%3E"/>
+<link rel="stylesheet" href="/assets/app.css"/></head><body><div class="container"><div id="navMount"></div><section class="page"><div class="breadcrumb"><a href="/index.html">Home</a><span>/</span><span>Word Counter</span></div><h1>Word Counter</h1><p class="sub">Count words, characters na copy text kwa haraka.</p><label class="label">Text</label><textarea id="t" rows="9" placeholder="Bandika text hapa..."></textarea><div class="row3" style="margin-top:14px;"><div class="panel"><div class="small">Words</div><div id="words" style="font-size:1.8rem;font-weight:900">0</div></div><div class="panel"><div class="small">Characters</div><div id="chars" style="font-size:1.8rem;font-weight:900">0</div></div><div class="panel"><div class="small">Characters (no spaces)</div><div id="chars2" style="font-size:1.8rem;font-weight:900">0</div></div></div><div class="btns"><button id="copy" class="secondary" disabled>Copy text</button><button id="clr" class="ghost">Clear</button></div></section><div id="footerMount"></div></div><div id="toast" class="toast"></div><script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script>const t=document.getElementById("t"),words=document.getElementById("words"),chars=document.getElementById("chars"),chars2=document.getElementById("chars2"),copyBtn=document.getElementById("copy");function count(){const s=t.value||"";words.textContent=s.trim()?s.trim().split(/\s+/).length:0;chars.textContent=s.length;chars2.textContent=s.replace(/\s/g,"").length;copyBtn.disabled=!s.trim();}t.addEventListener("input",count);count();document.getElementById("clr").onclick=()=>{t.value="";count();};copyBtn.onclick=()=>copyText(t.value);</script></body></html>

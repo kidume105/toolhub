@@ -1,29 +1,14 @@
 <!doctype html><html lang="sw"><head>
   <meta charset="utf-8"/>
   <title>Timestamp Converter — QuickTools</title>
+  <meta name="description" content="Convert Unix seconds kwenda date na kurudi."/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="description" content="Unix seconds ↔ date time converter."/>
-  <meta name="theme-color" content="#08111f"/>
+  <meta name="theme-color" content="#070b17"/>
   <link rel="canonical" href="/tools/timestamp.html"/>
   <meta property="og:title" content="Timestamp Converter — QuickTools"/>
-  <meta property="og:description" content="Unix seconds ↔ date time converter."/>
+  <meta property="og:description" content="Convert Unix seconds kwenda date na kurudi."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="/tools/timestamp.html"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="robots" content="index,follow"/>
-<link rel="stylesheet" href="/assets/app.css"/></head><body>
-<div class="container"><div id="navMount"></div>
-<section class="page">
-<div class="breadcrumb"><a href="/index.html">Tools</a> / <span>Timestamp Converter</span></div>
-<h1 style="margin:10px 0 6px">Timestamp Converter</h1>
-<p class="sub">Unix seconds ↔ date time converter.</p>
-<div class="row2"><div class="panel"><label class="label">Unix Timestamp (seconds)</label><input id="unix" placeholder="1710000000"/><div class="btns"><button id="toDate">To Date</button><button id="nowUnix" class="secondary">Now</button></div></div><div class="panel"><label class="label">Date/Time</label><input id="date" placeholder="YYYY-MM-DD HH:mm:ss"/><div class="btns"><button id="toUnix">To Unix</button><button id="nowDate" class="secondary">Now</button></div></div></div><p id="msg" class="note" style="margin-top:12px"></p>
-</section><div id="footerMount"></div></div>
-<div id="toast" class="toast"></div>
-<script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script>
-const u=document.getElementById('unix'),d=document.getElementById('date'),m=document.getElementById('msg'); const pad=n=>String(n).padStart(2,'0'); const fmt=x=>`${x.getFullYear()}-${pad(x.getMonth()+1)}-${pad(x.getDate())} ${pad(x.getHours())}:${pad(x.getMinutes())}:${pad(x.getSeconds())}`;
-document.getElementById('toDate').onclick=()=>{const s=parseInt((u.value||'').trim(),10); if(Number.isNaN(s)) return m.textContent='⚠️ Invalid unix'; d.value=fmt(new Date(s*1000)); m.textContent='✅ Done';};
-document.getElementById('toUnix').onclick=()=>{const iso=(d.value||'').trim().replace(' ','T'); const x=new Date(iso); if(isNaN(x.getTime())) return m.textContent='⚠️ Invalid date'; u.value=Math.floor(x.getTime()/1000); m.textContent='✅ Done';};
-function setNow(){const x=new Date(); d.value=fmt(x); u.value=Math.floor(x.getTime()/1000)} document.getElementById('nowUnix').onclick=()=>{setNow();m.textContent='✅ Now';}; document.getElementById('nowDate').onclick=()=>{setNow();m.textContent='✅ Now';}; setNow();
-</script>
-</body></html>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='14' width='64' height='64' fill='%236d8dff'/%3E%3Ctext x='50%25' y='54%25' font-size='34' text-anchor='middle' dominant-baseline='middle' fill='white'%3E⚡%3C/text%3E%3C/svg%3E"/>
+<link rel="stylesheet" href="/assets/app.css"/></head><body><div class="container"><div id="navMount"></div><section class="page"><div class="breadcrumb"><a href="/index.html">Home</a><span>/</span><span>Timestamp Converter</span></div><h1>Timestamp Converter</h1><p class="sub">Convert Unix seconds kwenda date na kurudi.</p><div class="row2"><div class="panel"><label class="label">Unix Timestamp (seconds)</label><input id="unix" placeholder="1710000000"/><div class="btns"><button id="toDate">To Date</button><button id="now1" class="secondary">Now</button></div></div><div class="panel"><label class="label">Date Time</label><input id="date" placeholder="YYYY-MM-DD HH:mm:ss"/><div class="btns"><button id="toUnix">To Unix</button><button id="now2" class="secondary">Now</button></div></div></div><p id="msg" class="note" style="margin-top:12px;"></p></section><div id="footerMount"></div></div><div id="toast" class="toast"></div><script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script>const unix=document.getElementById("unix"),date=document.getElementById("date"),msg=document.getElementById("msg");const pad=n=>String(n).padStart(2,"0"),fmt=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;function setNow(){const d=new Date();unix.value=Math.floor(d.getTime()/1000);date.value=fmt(d);}document.getElementById("toDate").onclick=()=>{const s=parseInt((unix.value||"").trim(),10);if(Number.isNaN(s))return msg.textContent="⚠️ Invalid unix";date.value=fmt(new Date(s*1000));msg.textContent="✅ Converted"};document.getElementById("toUnix").onclick=()=>{const d=new Date((date.value||"").trim().replace(" ","T"));if(isNaN(d.getTime()))return msg.textContent="⚠️ Invalid date";unix.value=Math.floor(d.getTime()/1000);msg.textContent="✅ Converted"};document.getElementById("now1").onclick=()=>{setNow();msg.textContent="✅ Now"};document.getElementById("now2").onclick=()=>{setNow();msg.textContent="✅ Now"};setNow();</script></body></html>

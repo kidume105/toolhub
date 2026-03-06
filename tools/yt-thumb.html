@@ -1,32 +1,14 @@
 <!doctype html><html lang="sw"><head>
   <meta charset="utf-8"/>
   <title>YouTube Thumbnail Downloader — QuickTools</title>
+  <meta name="description" content="Pata maxres, hq na mq thumbnails kwa YouTube link."/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="description" content="Pata maxres/hq/mq thumbnails kwa YouTube link."/>
-  <meta name="theme-color" content="#08111f"/>
+  <meta name="theme-color" content="#070b17"/>
   <link rel="canonical" href="/tools/yt-thumb.html"/>
   <meta property="og:title" content="YouTube Thumbnail Downloader — QuickTools"/>
-  <meta property="og:description" content="Pata maxres/hq/mq thumbnails kwa YouTube link."/>
+  <meta property="og:description" content="Pata maxres, hq na mq thumbnails kwa YouTube link."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="/tools/yt-thumb.html"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="robots" content="index,follow"/>
-<link rel="stylesheet" href="/assets/app.css"/></head><body>
-<div class="container"><div id="navMount"></div>
-<section class="page">
-<div class="breadcrumb"><a href="/index.html">Tools</a> / <span>YouTube Thumbnail Downloader</span></div>
-<h1 style="margin:10px 0 6px">YouTube Thumbnail Downloader</h1>
-<p class="sub">Pata maxres/hq/mq thumbnails kwa YouTube link.</p>
-<label class="label">YouTube URL</label><input id="url" placeholder="https://www.youtube.com/watch?v=VIDEO_ID"/>
-<div class="btns"><button id="go">Get thumbnails</button><button id="clr" class="ghost">Clear</button></div><p id="msg" class="note"></p>
-<div id="out" class="panel" style="display:none"><table class="table" id="tbl"><thead><tr><th>Type</th><th>Preview</th><th>Download</th></tr></thead><tbody></tbody></table></div>
-</section><div id="footerMount"></div></div>
-<div id="toast" class="toast"></div>
-<script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script>
-const u=document.getElementById('url'),m=document.getElementById('msg'),out=document.getElementById('out'),tb=document.querySelector('#tbl tbody');
-function extractId(v){try{const x=new URL(v); if(x.hostname.includes('youtu.be')) return x.pathname.replace('/',''); if(x.searchParams.get('v')) return x.searchParams.get('v'); const s=x.pathname.match(/\/shorts\/([^\/\?]+)/); if(s) return s[1]; return null;}catch(e){return /^[a-zA-Z0-9_-]{6,}$/.test(v)?v:null;}}
-const types=[['maxresdefault','Max (HD)'],['sddefault','SD'],['hqdefault','HQ'],['mqdefault','MQ'],['default','Default']];
-document.getElementById('go').onclick=()=>{const id=extractId((u.value||'').trim()); if(!id){m.textContent='⚠️ Invalid link'; out.style.display='none'; return;} tb.innerHTML=types.map(([f,l])=>{const img=`https://img.youtube.com/vi/${id}/${f}.jpg`; return `<tr><td>${l}</td><td><img src="${img}" style="max-width:220px;border-radius:12px;border:1px solid rgba(255,255,255,.12)"></td><td><a class="pill" href="${img}" target="_blank">Open</a></td></tr>`}).join(''); out.style.display='block'; m.textContent='✅ Done';};
-document.getElementById('clr').onclick=()=>{u.value='';m.textContent='';out.style.display='none';tb.innerHTML='';};
-</script>
-</body></html>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='14' width='64' height='64' fill='%236d8dff'/%3E%3Ctext x='50%25' y='54%25' font-size='34' text-anchor='middle' dominant-baseline='middle' fill='white'%3E⚡%3C/text%3E%3C/svg%3E"/>
+<link rel="stylesheet" href="/assets/app.css"/></head><body><div class="container"><div id="navMount"></div><section class="page"><div class="breadcrumb"><a href="/index.html">Home</a><span>/</span><span>YouTube Thumbnail Downloader</span></div><h1>YouTube Thumbnail Downloader</h1><p class="sub">Pata maxres, hq na mq thumbnails kwa YouTube link.</p><label class="label">YouTube URL</label><input id="url" placeholder="https://www.youtube.com/watch?v=VIDEO_ID"/><div class="btns"><button id="go">Get thumbnails</button><button id="clr" class="ghost">Clear</button></div><p id="msg" class="note"></p><div id="out" class="panel hidden"><h3 style="margin-top:0;">Results</h3><table class="table" id="tbl"><thead><tr><th>Type</th><th>Preview</th><th>Action</th></tr></thead><tbody></tbody></table></div></section><div id="footerMount"></div></div><div id="toast" class="toast"></div><script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script>const url=document.getElementById("url"),msg=document.getElementById("msg"),out=document.getElementById("out"),tbody=document.querySelector("#tbl tbody");function extractId(u){try{const x=new URL(u);if(x.hostname.includes("youtu.be"))return x.pathname.replace("/","");if(x.searchParams.get("v"))return x.searchParams.get("v");const m=x.pathname.match(/\/shorts\/([^\/\?]+)/);return m?m[1]:null}catch{return /^[a-zA-Z0-9_-]{6,}$/.test(u)?u:null}}const types=[["maxresdefault","Max (HD)"],["sddefault","SD"],["hqdefault","HQ"],["mqdefault","MQ"],["default","Default"]];document.getElementById("go").onclick=()=>{const id=extractId((url.value||"").trim());if(!id){msg.textContent="⚠️ Invalid YouTube URL";out.classList.add("hidden");return;}msg.innerHTML='<span class="loading"><span class="spinner"></span> Inatafuta thumbnails...</span>';setTimeout(()=>{tbody.innerHTML=types.map(([file,label])=>{const img=`https://img.youtube.com/vi/${id}/${file}.jpg`;return `<tr><td>${label}</td><td><img src="${img}" style="max-width:220px;border-radius:14px;border:1px solid rgba(255,255,255,.1)"/></td><td><a class="btn secondary" href="${img}" target="_blank" rel="noopener">Open / Download</a></td></tr>`}).join("");msg.textContent="✅ Thumbnails ready";out.classList.remove("hidden")},350)};document.getElementById("clr").onclick=()=>{url.value="";msg.textContent="";out.classList.add("hidden");tbody.innerHTML=""};</script></body></html>

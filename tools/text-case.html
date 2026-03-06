@@ -1,32 +1,14 @@
 <!doctype html><html lang="sw"><head>
   <meta charset="utf-8"/>
   <title>Text Case Converter — QuickTools</title>
+  <meta name="description" content="Convert text to upper, lower, title case na capitalize."/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="description" content="Uppercase, lowercase, title case na capitalize."/>
-  <meta name="theme-color" content="#08111f"/>
+  <meta name="theme-color" content="#070b17"/>
   <link rel="canonical" href="/tools/text-case.html"/>
   <meta property="og:title" content="Text Case Converter — QuickTools"/>
-  <meta property="og:description" content="Uppercase, lowercase, title case na capitalize."/>
+  <meta property="og:description" content="Convert text to upper, lower, title case na capitalize."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="/tools/text-case.html"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="robots" content="index,follow"/>
-<link rel="stylesheet" href="/assets/app.css"/></head><body>
-<div class="container"><div id="navMount"></div>
-<section class="page">
-<div class="breadcrumb"><a href="/index.html">Tools</a> / <span>Text Case Converter</span></div>
-<h1 style="margin:10px 0 6px">Text Case Converter</h1>
-<p class="sub">Uppercase, lowercase, title case na capitalize.</p>
-<label class="label">Input</label><textarea id="in" rows="7" placeholder="Andika/bandika text..."></textarea>
-<div class="btns"><button data-act="upper">UPPERCASE</button><button data-act="lower" class="secondary">lowercase</button><button data-act="cap" class="secondary">Capitalize</button><button data-act="title" class="secondary">Title Case</button><button id="copy" class="ghost">Copy output</button><button id="clr" class="ghost">Clear</button></div>
-<div class="panel"><label class="label">Output</label><textarea id="out" rows="7" readonly></textarea></div>
-</section><div id="footerMount"></div></div>
-<div id="toast" class="toast"></div>
-<script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script>
-const i=document.getElementById('in'),o=document.getElementById('out');
-function cap(s){return s.replace(/\b([a-z])/g,m=>m.toUpperCase())}
-function titleCase(s){return s.toLowerCase().replace(/\b\w+/g,w=>w[0].toUpperCase()+w.slice(1))}
-document.addEventListener('click',e=>{const a=e.target?.dataset?.act; if(!a) return; const s=i.value||''; if(a==='upper')o.value=s.toUpperCase(); if(a==='lower')o.value=s.toLowerCase(); if(a==='cap')o.value=cap(s.toLowerCase()); if(a==='title')o.value=titleCase(s);});
-document.getElementById('copy').onclick=()=>copyText(o.value); document.getElementById('clr').onclick=()=>{i.value='';o.value='';};
-</script>
-</body></html>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='14' width='64' height='64' fill='%236d8dff'/%3E%3Ctext x='50%25' y='54%25' font-size='34' text-anchor='middle' dominant-baseline='middle' fill='white'%3E⚡%3C/text%3E%3C/svg%3E"/>
+<link rel="stylesheet" href="/assets/app.css"/></head><body><div class="container"><div id="navMount"></div><section class="page"><div class="breadcrumb"><a href="/index.html">Home</a><span>/</span><span>Text Case Converter</span></div><h1>Text Case Converter</h1><p class="sub">Convert text to upper, lower, title case na capitalize.</p><label class="label">Input</label><textarea id="in" rows="7" placeholder="Andika au bandika text..."></textarea><div class="btns"><button data-act="upper">UPPERCASE</button><button data-act="lower" class="secondary">lowercase</button><button data-act="title" class="secondary">Title Case</button><button data-act="cap" class="secondary">Capitalize</button><button id="copy" class="ghost">Copy output</button></div><div class="panel"><label class="label">Output</label><textarea id="out" rows="7" readonly></textarea></div></section><div id="footerMount"></div></div><div id="toast" class="toast"></div><script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script>const input=document.getElementById("in"),out=document.getElementById("out");function titleCase(s){return s.toLowerCase().replace(/\w+/g,w=>w[0].toUpperCase()+w.slice(1));}function capitalize(s){return s.toLowerCase().replace(/([a-z])/g,m=>m.toUpperCase());}document.addEventListener("click",(e)=>{const act=e.target.dataset.act;if(!act)return;const s=input.value||"";if(act==="upper")out.value=s.toUpperCase();if(act==="lower")out.value=s.toLowerCase();if(act==="title")out.value=titleCase(s);if(act==="cap")out.value=capitalize(s);});document.getElementById("copy").onclick=()=>copyText(out.value);</script></body></html>

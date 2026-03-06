@@ -4,6 +4,9 @@
   <url><loc>/about.html</loc></url>
   <url><loc>/privacy.html</loc></url>
   <url><loc>/contact.html</loc></url>
+  <url><loc>/tools/video-compress.html</loc></url>
+  <url><loc>/tools/audio-convert.html</loc></url>
+  <url><loc>/tools/img-compress.html</loc></url>
   <url><loc>/tools/qr.html</loc></url>
   <url><loc>/tools/password.html</loc></url>
   <url><loc>/tools/counter.html</loc></url>
@@ -13,7 +16,4 @@
   <url><loc>/tools/timestamp.html</loc></url>
   <url><loc>/tools/url-tools.html</loc></url>
   <url><loc>/tools/yt-thumb.html</loc></url>
-  <url><loc>/tools/img-compress.html</loc></url>
-  <url><loc>/tools/video-compress.html</loc></url>
-  <url><loc>/tools/audio-convert.html</loc></url>
 </urlset>

@@ -1,31 +1,14 @@
 <!doctype html><html lang="sw"><head>
   <meta charset="utf-8"/>
   <title>Base64 Encode/Decode — QuickTools</title>
+  <meta name="description" content="Encode au decode UTF-8 text kwa urahisi."/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="description" content="Encode/Decode UTF‑8 text."/>
-  <meta name="theme-color" content="#08111f"/>
+  <meta name="theme-color" content="#070b17"/>
   <link rel="canonical" href="/tools/base64.html"/>
   <meta property="og:title" content="Base64 Encode/Decode — QuickTools"/>
-  <meta property="og:description" content="Encode/Decode UTF‑8 text."/>
+  <meta property="og:description" content="Encode au decode UTF-8 text kwa urahisi."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="/tools/base64.html"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="robots" content="index,follow"/>
-<link rel="stylesheet" href="/assets/app.css"/></head><body>
-<div class="container"><div id="navMount"></div>
-<section class="page">
-<div class="breadcrumb"><a href="/index.html">Tools</a> / <span>Base64 Encode/Decode</span></div>
-<h1 style="margin:10px 0 6px">Base64 Encode/Decode</h1>
-<p class="sub">Encode/Decode UTF‑8 text.</p>
-<div class="row2"><div><label class="label">Input</label><textarea id="in" rows="10"></textarea></div><div><label class="label">Output</label><textarea id="out" rows="10" readonly></textarea></div></div>
-<div class="btns"><button id="enc">Encode</button><button id="dec" class="secondary">Decode</button><button id="copy" class="ghost">Copy output</button><button id="clr" class="ghost">Clear</button></div><p id="msg" class="note"></p>
-</section><div id="footerMount"></div></div>
-<div id="toast" class="toast"></div>
-<script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script>
-const i=document.getElementById('in'),o=document.getElementById('out'),m=document.getElementById('msg');
-const utf8ToB64=str=>btoa(unescape(encodeURIComponent(str))); const b64ToUtf8=b64=>decodeURIComponent(escape(atob(b64)));
-document.getElementById('enc').onclick=()=>{try{o.value=utf8ToB64(i.value||'');m.textContent='✅ Encoded';}catch(e){m.textContent='⚠️ Error';}};
-document.getElementById('dec').onclick=()=>{try{o.value=b64ToUtf8((i.value||'').trim());m.textContent='✅ Decoded';}catch(e){m.textContent='⚠️ Base64 invalid';}};
-document.getElementById('copy').onclick=()=>copyText(o.value); document.getElementById('clr').onclick=()=>{i.value='';o.value='';m.textContent='';};
-</script>
-</body></html>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='14' width='64' height='64' fill='%236d8dff'/%3E%3Ctext x='50%25' y='54%25' font-size='34' text-anchor='middle' dominant-baseline='middle' fill='white'%3E⚡%3C/text%3E%3C/svg%3E"/>
+<link rel="stylesheet" href="/assets/app.css"/></head><body><div class="container"><div id="navMount"></div><section class="page"><div class="breadcrumb"><a href="/index.html">Home</a><span>/</span><span>Base64 Encode/Decode</span></div><h1>Base64 Encode/Decode</h1><p class="sub">Encode au decode UTF-8 text kwa urahisi.</p><div class="row2"><div><label class="label">Input</label><textarea id="in" rows="10"></textarea></div><div><label class="label">Output</label><textarea id="out" rows="10" readonly></textarea></div></div><div class="btns"><button id="enc">Encode</button><button id="dec" class="secondary">Decode</button><button id="copy" class="ghost">Copy output</button><button id="clr" class="ghost">Clear</button></div><p id="msg" class="note"></p></section><div id="footerMount"></div></div><div id="toast" class="toast"></div><script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script>const i=document.getElementById("in"),o=document.getElementById("out"),m=document.getElementById("msg");const utf8ToB64=s=>btoa(unescape(encodeURIComponent(s))),b64ToUtf8=b=>decodeURIComponent(escape(atob(b)));document.getElementById("enc").onclick=()=>{try{o.value=utf8ToB64(i.value||"");m.textContent="✅ Encoded"}catch{m.textContent="⚠️ Encode error"}};document.getElementById("dec").onclick=()=>{try{o.value=b64ToUtf8((i.value||"").trim());m.textContent="✅ Decoded"}catch{m.textContent="⚠️ Decode error"}};document.getElementById("copy").onclick=()=>copyText(o.value);document.getElementById("clr").onclick=()=>{i.value="";o.value="";m.textContent=""};</script></body></html>

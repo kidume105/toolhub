@@ -1,34 +1,14 @@
 <!doctype html><html lang="sw"><head>
   <meta charset="utf-8"/>
   <title>QR Code Generator — QuickTools</title>
+  <meta name="description" content="Generate QR code kwa URL au text na download PNG."/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="description" content="Generate QR kutoka text/link na download PNG."/>
-  <meta name="theme-color" content="#08111f"/>
+  <meta name="theme-color" content="#070b17"/>
   <link rel="canonical" href="/tools/qr.html"/>
   <meta property="og:title" content="QR Code Generator — QuickTools"/>
-  <meta property="og:description" content="Generate QR kutoka text/link na download PNG."/>
+  <meta property="og:description" content="Generate QR code kwa URL au text na download PNG."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="/tools/qr.html"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="robots" content="index,follow"/>
-<link rel="stylesheet" href="/assets/app.css"/></head><body>
-<div class="container"><div id="navMount"></div>
-<section class="page">
-<div class="breadcrumb"><a href="/index.html">Tools</a> / <span>QR Code Generator</span></div>
-<h1 style="margin:10px 0 6px">QR Code Generator</h1>
-<p class="sub">Generate QR kutoka text/link na download PNG.</p>
-<label class="label">Link / Text</label><textarea id="text" rows="3" placeholder="Mfano: https://example.com"></textarea>
-<div class="row2"><div><label class="label">Size</label><select id="size"><option>220</option><option selected>280</option><option>360</option><option>420</option></select></div>
-<div><label class="label">Error correction</label><select id="ec"><option>L</option><option selected>M</option><option>Q</option><option>H</option></select></div></div>
-<div class="btns"><button id="gen">Tengeneza</button><button id="dl" class="secondary" disabled>Download PNG</button><button id="clr" class="ghost">Futa</button></div>
-<div class="panel"><div class="row2"><div><div class="progress"><div id="pbar"></div></div><p id="msg" class="note" style="margin-top:10px">Tip: tumia link halisi ili QR isome vizuri.</p></div><div class="qrbox" id="qrcode"></div></div></div>
-</section><div id="footerMount"></div></div>
-<div id="toast" class="toast"></div>
-<script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script>
-let qr=null; const text=document.getElementById('text'),wrap=document.getElementById('qrcode'),msg=document.getElementById('msg'),gen=document.getElementById('gen'),dl=document.getElementById('dl'),clr=document.getElementById('clr'),size=document.getElementById('size'),ec=document.getElementById('ec'),pbar=document.getElementById('pbar');
-function clearQR(){wrap.innerHTML='';dl.disabled=true;pbar.style.width='0%';}
-gen.onclick=()=>{const val=(text.value||'').trim(); if(!val){msg.textContent='⚠️ Weka text/link kwanza.'; clearQR(); return;} msg.textContent='Inatengeneza...'; clearQR(); pbar.style.width='45%'; new QRCode(wrap,{text:val,width:+size.value,height:+size.value,correctLevel:QRCode.CorrectLevel[ec.value]}); setTimeout(()=>{dl.disabled=false;pbar.style.width='100%';msg.textContent='✅ Ready';},80);};
-dl.onclick=()=>{const img=wrap.querySelector('img'); const cv=wrap.querySelector('canvas'); const url=img?.src||cv?.toDataURL('image/png'); if(!url) return; const a=document.createElement('a'); a.href=url; a.download='qrcode.png'; a.click();};
-clr.onclick=()=>{text.value=''; msg.textContent='Tip: tumia link halisi ili QR isome vizuri.'; clearQR();};
-</script>
-</body></html>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='14' width='64' height='64' fill='%236d8dff'/%3E%3Ctext x='50%25' y='54%25' font-size='34' text-anchor='middle' dominant-baseline='middle' fill='white'%3E⚡%3C/text%3E%3C/svg%3E"/>
+<link rel="stylesheet" href="/assets/app.css"/></head><body><div class="container"><div id="navMount"></div><section class="page"><div class="breadcrumb"><a href="/index.html">Home</a><span>/</span><span>QR Code Generator</span></div><h1>QR Code Generator</h1><p class="sub">Generate QR code kwa URL au text na download PNG.</p><div class="row2"><div><label class="label">Link / Text</label><textarea id="text" rows="4" placeholder="Mfano: https://example.com"></textarea><div class="row2"><div><label class="label">Size</label><select id="size"><option>220</option><option selected>300</option><option>420</option></select></div><div><label class="label">Error correction</label><select id="ec"><option>L</option><option selected>M</option><option>Q</option><option>H</option></select></div></div><div class="btns"><button id="gen">Generate</button><button id="dl" class="secondary" disabled>Download PNG</button><button id="clr" class="ghost">Clear</button></div><div class="panel"><div class="progress"><div id="bar"></div></div><p id="msg" class="note" style="margin-top:10px;">Weka text au URL.</p></div></div><div class="panel"><div class="qrbox" id="qrcode"></div></div></div></section><div id="footerMount"></div></div><div id="toast" class="toast"></div><script src="/assets/layout.js"></script><script src="/assets/app.js"></script><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script>let qr=null;const text=document.getElementById("text"),wrap=document.getElementById("qrcode"),msg=document.getElementById("msg"),gen=document.getElementById("gen"),dl=document.getElementById("dl"),clr=document.getElementById("clr"),size=document.getElementById("size"),ec=document.getElementById("ec"),bar=document.getElementById("bar");function clearQR(){wrap.innerHTML="";qr=null;dl.disabled=true;bar.style.width="0%";}gen.onclick=()=>{const val=(text.value||"").trim();if(!val){msg.textContent="⚠️ Weka text kwanza.";return;}clearQR();msg.innerHTML='<span class="loading"><span class="spinner"></span> Inatengeneza QR...</span>';bar.style.width="35%";qr=new QRCode(wrap,{text:val,width:parseInt(size.value,10),height:parseInt(size.value,10),correctLevel:QRCode.CorrectLevel[ec.value]});setTimeout(()=>{bar.style.width="100%";msg.textContent="✅ QR iko tayari.";dl.disabled=false;},120);};dl.onclick=()=>{const img=wrap.querySelector("img"),canvas=wrap.querySelector("canvas"),url=img?.src||canvas?.toDataURL("image/png");if(!url)return;const a=document.createElement("a");a.href=url;a.download="qrcode.png";document.body.appendChild(a);a.click();a.remove();};clr.onclick=()=>{text.value="";msg.textContent="Weka text au URL.";clearQR();};</script></body></html>
